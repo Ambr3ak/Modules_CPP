@@ -23,6 +23,8 @@ public:
 	void initContainers(char **av);
     void printVector(clock_t start, clock_t end);
     void printList(clock_t start, clock_t end);
+	void printWidth();
+
 	template < typename T >
 	void mergeSort(T & cont, int left, int right){
 		int mid;

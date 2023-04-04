@@ -52,7 +52,7 @@ void PmergeMe::printVector(clock_t start, clock_t end){
     if (start != 0 && end != 0)
     {
         double time_taken = double(end - start) / double(CLOCKS_PER_SEC);
-        std::cout << "Time to process a range of " << numberToSort << " elements with std::vector<int> : " << std::fixed << time_taken << setprecision(5);
+        std::cout << "Time to process a range of " << numberToSort << " elements with std::vector<int> : " << std::fixed << time_taken << std::setprecision(6) << " sec" << std::endl;
         return;
     }
     return;
@@ -63,11 +63,23 @@ void PmergeMe::printList(clock_t start, clock_t end){
     if (start != 0 && end != 0)
     {
         double time_taken = double(end - start) / double(CLOCKS_PER_SEC);
-        std::cout << "Time to process a range of " << numberToSort << " elements with std::list<int> : " << time_taken << std::endl;
+        std::cout << "Time to process a range of " << numberToSort << " elements with std::list<int> : "  << std::fixed << time_taken << std::setprecision(6) << " sec" << std::endl ;
         return;
     }
     return;
     
+}
+
+void PmergeMe::printWidth(){
+    if (numberToSort > 5){
+        for (size_t i = 0; i < 5; i++)
+            std::cout << vectorContainer[i] << " ";
+        std::cout << "[...]";
+    }
+    else
+        for (size_t i = 0; i < vectorContainer.size(); i++)
+            std::cout << vectorContainer[i] << " ";
+    std::cout << std::endl;
 }
 
 void PmergeMe::initContainers(char **av){
@@ -83,9 +95,7 @@ void PmergeMe::initContainers(char **av){
     }
     this->numberToSort = i - 1;
     std::cout << "Before: ";
-    for (size_t i = 0; i < vectorContainer.size(); i++)
-        std::cout << vectorContainer[i] << " ";
-    std::cout << std::endl;
+    printWidth();
     clock_t start = clock();
     mergeSort(vectorContainer, 0, numberToSort - 1);
     clock_t end = clock();
@@ -93,9 +103,8 @@ void PmergeMe::initContainers(char **av){
     mergeSort(vectorContainer, 0, numberToSort - 1);
     clock_t endL = clock();
     std::cout << "After: ";
-    for (size_t i = 0; i < vectorContainer.size(); i++)
-        std::cout << vectorContainer[i] << " ";
-    std::cout << std::endl;
+    printWidth();
+
     printVector(start, end);
     printList(startL, endL);
 }
