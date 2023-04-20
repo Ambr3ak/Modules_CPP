@@ -11,7 +11,7 @@ static size_t stringtoint(std::string c){
 }
 
 
-PmergeMe::PmergeMe(void){
+PmergeMe::PmergeMe(void) : straggler(-1){
     std::cout << COLOR_GREEN << "[PmergeMe] Constructor called." << COLOR_END << std::endl;
 }
 
@@ -52,7 +52,7 @@ void PmergeMe::printVector(clock_t start, clock_t end){
     if (start != 0 && end != 0)
     {
         double time_taken = double(end - start) / double(CLOCKS_PER_SEC);
-        std::cout << "Time to process a range of " << numberToSort << " elements with std::vector<int> : " << std::fixed << time_taken << std::setprecision(6) << " sec" << std::endl;
+        std::cout << "Time to process a range of " << numberToSort << " elements with std::vector<unsigned int> : " << std::fixed << time_taken << std::setprecision(6) << " sec" << std::endl;
         return;
     }
     return;
@@ -63,7 +63,7 @@ void PmergeMe::printList(clock_t start, clock_t end){
     if (start != 0 && end != 0)
     {
         double time_taken = double(end - start) / double(CLOCKS_PER_SEC);
-        std::cout << "Time to process a range of " << numberToSort << " elements with std::list<int> : "  << std::fixed << time_taken << std::setprecision(6) << " sec" << std::endl ;
+        std::cout << "Time to process a range of " << numberToSort << " elements with std::list<unsigned int> : "  << std::fixed << time_taken << std::setprecision(6) << " sec" << std::endl ;
         return;
     }
     return;
@@ -97,10 +97,10 @@ void PmergeMe::initContainers(char **av){
     std::cout << "Before: ";
     printWidth();
     clock_t start = clock();
-    mergeSort(vectorContainer, 0, numberToSort - 1);
+    startMerge(vectorContainer);
     clock_t end = clock();
     clock_t startL = clock();
-    mergeSort(vectorContainer, 0, numberToSort - 1);
+    startMerge(listContainer);
     clock_t endL = clock();
     std::cout << "After: ";
     printWidth();
