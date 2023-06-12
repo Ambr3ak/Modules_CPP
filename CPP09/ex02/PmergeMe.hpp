@@ -25,42 +25,42 @@ public:
     void printList(clock_t start, clock_t end);
 	void printWidth();
 
-	template < typename T >
-	void startMerge(T & container){
-    std::vector<std::pair<unsigned int, unsigned int> > contPair;
-    T largest;
-    T smallest;
+// 	template < typename T >
+// 	void startMerge(T & container){
+//     std::vector<std::pair<unsigned int, unsigned int> > contPair;
+//     T largest;
+//     T smallest;
 
-    if (container.size() % 2 != 0)
-    {
-        straggler = *(container.end() - 1);
-        container.erase(container.end() - 1);
-    }
+//     if (container.size() % 2 != 0)
+//     {
+//         straggler = *(container.end() - 1);
+//         container.erase(container.end() - 1);
+//     }
 
-    for (typename T::iterator it = container.begin(); it != container.end(); it+=2){
-        typename T::iterator tmpIt = it;
-        contPair.push_back(std::make_pair((*it), *(++tmpIt)));
-    }
+//     for (typename T::iterator it = container.begin(); it != container.end(); it+=2){
+//         typename T::iterator tmpIt = it;
+//         contPair.push_back(std::make_pair((*it), *(++tmpIt)));
+//     }
 
-    for (size_t i = 0; i < contPair.size(); i++){
-        if (contPair[i].first > contPair[i].second){
-            std::swap(contPair[i].first, contPair[i].second);
-        }
-        smallest.push_back(contPair[i].second);
-        largest.push_back(contPair[i].first);
-    }
+//     for (size_t i = 0; i < contPair.size(); i++){
+//         if (contPair[i].first > contPair[i].second){
+//             std::swap(contPair[i].first, contPair[i].second);
+//         }
+//         smallest.push_back(contPair[i].second);
+//         largest.push_back(contPair[i].first);
+//     }
 
-    std::sort(smallest.begin(), smallest.end());
+//     std::sort(smallest.begin(), smallest.end());
 
-    for (typename T::iterator it = largest.begin(); it != largest.end(); ++it){
-        smallest.insert(std::lower_bound(smallest.begin(), smallest.end(), *it), *it);
-    }
-    for (size_t i = 0; i < smallest.size(); i++){
-        container[i] = smallest[i];
-    }
-    if (straggler != -1)
-        container.insert(std::lower_bound(container.begin(), container.end(), straggler), straggler);
-}
+//     for (typename T::iterator it = largest.begin(); it != largest.end(); ++it){
+//         smallest.insert(std::lower_bound(smallest.begin(), smallest.end(), *it), *it);
+//     }
+//     for (size_t i = 0; i < smallest.size(); i++){
+//         container[i] = smallest[i];
+//     }
+//     if (straggler != -1)
+//         container.insert(std::lower_bound(container.begin(), container.end(), straggler), straggler);
+// }
 	
 	
 class NotANum : public std::exception
