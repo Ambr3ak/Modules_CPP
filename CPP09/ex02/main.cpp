@@ -13,6 +13,6 @@ int main(int ac, char **av){
             }
             return 0;
         }
-    std::cout << "Bad arguments" << std::endl;
+    std::cout << "Please add 2 or more positive interger." << std::endl;
     return 0;
 }

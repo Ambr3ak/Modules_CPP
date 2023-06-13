@@ -71,19 +71,16 @@ void PmergeMe::printDeq(clock_t start, clock_t end){
 }
 
 void PmergeMe::printWidth(){
-    if (numberToSort > 5){
-        for (size_t i = 0; i < 5; i++)
-            std::cout << vectorContainer[i] << " ";
-        std::cout << "[...]";
-    }
-    else
-        for (size_t i = 0; i < vectorContainer.size(); i++)
-            std::cout << vectorContainer[i] << " ";
+    // if (numberToSort > 5){
+    //     for (size_t i = 0; i < 5; i++)
+    //         std::cout << vectorContainer[i] << " ";
+    //     std::cout << "[...]";
+    // }
+    // else
+        for (size_t i = 0; i < DeqContainer.size(); i++)
+            std::cout << DeqContainer[i] << " ";
     std::cout << std::endl;
 }
-
-#include <iostream>
-#include <vector>
 
 
 void PmergeMe::initContainers(char **av){
@@ -101,10 +98,10 @@ void PmergeMe::initContainers(char **av){
     std::cout << "Before: ";
     printWidth();
     clock_t start = clock();
-    vectorContainer = mergeInsertSort(vectorContainer);
+    recursiveContainer(vectorContainer, 0, this->numberToSort);
     clock_t end = clock();
     clock_t startL = clock();
-    DeqContainer = mergeInsertSort(DeqContainer);
+    recursiveContainer(DeqContainer, 0, this->numberToSort);
     clock_t endL = clock();
     std::cout << "After: ";
     printWidth();
@@ -112,3 +109,5 @@ void PmergeMe::initContainers(char **av){
     printVector(start, end);
     printDeq(startL, endL);
 }
+
+

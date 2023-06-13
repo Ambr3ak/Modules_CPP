@@ -25,54 +25,76 @@ public:
     void printDeq(clock_t start, clock_t end);
 	void printWidth();
 
-
-	template < typename T >
-	T  jacobsthalSequence(int n) {
-		T  seq;
-		seq.push_back(1);
-		seq.push_back(1);
-
-		for (int i = 2; i < n; i++) {
-			seq.push_back(seq[i - 1] + 2 * seq[i - 2]);
-		}
-
-		return seq;
-	}
-
-	template < typename T >
-	void binaryInsert(T & arr, unsigned int val) {
-		int left = 0, right = arr.size();
-
-		while (left < right) {
-			int mid = left + (right - left) / 2;
-
-			if (arr[mid] < val) {
-				left = mid + 1;
-			} else {
-				right = mid;
-			}
-		}
-		
-		arr.insert(arr.begin() + left, val);
-	}
-
-	template < typename T >
-	T mergeInsertSort(T arr) {
-    int n = arr.size();
-    
-    if (n <= 1) {
-        return arr;
+template<typename T>
+void insertionSort(T& cont, size_t left, size_t rightIndex)
+{
+    for (size_t i = left; i < rightIndex; i++)
+    {
+        typename T::value_type currentElement = cont[i + 1];
+        size_t j = i + 1;
+        while (j > left && cont[j - 1] > currentElement)
+        {
+            cont[j] = cont[j - 1];
+            j--;
+        }
+        cont[j] = currentElement;
     }
-
-    T sortedArr;
-    sortedArr.push_back(arr[0]);
-
-    for (int i = 1; i < n; i++) {
-        binaryInsert(sortedArr, arr[i]);
-    }
-
-    return sortedArr;
 }
+
+template<typename T>
+void merge(T& cont, size_t left, size_t mid, size_t right)
+{
+    size_t i = left;              // index for the first part
+    size_t j = mid + 1;           // index for the second part
+    size_t k = 0;                 // index for the temporary container
+    
+    T mergedSegment(right - left + 1); // Temporary container to store the merged elements
+    
+    // Merge the two parts
+    while (i <= mid && j <= right)
+    {
+        if (cont[i] <= cont[j])
+        {
+            mergedSegment[k++] = cont[i++];
+        }
+        else
+        {
+            mergedSegment[k++] = cont[j++];
+        }
+    }
+    
+    // Copy the remaining elements of the first part, if any
+    while (i <= mid)
+    {
+        mergedSegment[k++] = cont[i++];
+    }
+    
+    // Copy the remaining elements of the second part, if any
+    while (j <= right)
+    {
+        mergedSegment[k++] = cont[j++];
+    }
+    
+    // Copy the elements from the temporary container back to the original container
+    for (i = left, k = 0; i <= right;)
+    {
+        cont[i++] = mergedSegment[k++];
+    }
+}
+
+template<typename T>
+void recursiveContainer(T& cont, size_t leftRange, size_t rightRange) {
+    size_t halfTotalSize = cont.size() / 2;
+    if (rightRange - leftRange <= halfTotalSize)
+        insertionSort(cont, leftRange, rightRange);
+    else {
+        size_t midIndex = (leftRange + rightRange) / 2;
+        recursiveContainer(cont, leftRange, midIndex);
+        recursiveContainer(cont, midIndex + 1, rightRange);
+        merge(cont, leftRange, midIndex, rightRange);
+    }
+}
+
 	
 class NotANum : public std::exception
 	{
