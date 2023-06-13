@@ -22,46 +22,57 @@ public:
 
 	void initContainers(char **av);
     void printVector(clock_t start, clock_t end);
-    void printList(clock_t start, clock_t end);
+    void printDeq(clock_t start, clock_t end);
 	void printWidth();
 
-// 	template < typename T >
-// 	void startMerge(T & container){
-//     std::vector<std::pair<unsigned int, unsigned int> > contPair;
-//     T largest;
-//     T smallest;
 
-//     if (container.size() % 2 != 0)
-//     {
-//         straggler = *(container.end() - 1);
-//         container.erase(container.end() - 1);
-//     }
+	template < typename T >
+	T  jacobsthalSequence(int n) {
+		T  seq;
+		seq.push_back(1);
+		seq.push_back(1);
 
-//     for (typename T::iterator it = container.begin(); it != container.end(); it+=2){
-//         typename T::iterator tmpIt = it;
-//         contPair.push_back(std::make_pair((*it), *(++tmpIt)));
-//     }
+		for (int i = 2; i < n; i++) {
+			seq.push_back(seq[i - 1] + 2 * seq[i - 2]);
+		}
 
-//     for (size_t i = 0; i < contPair.size(); i++){
-//         if (contPair[i].first > contPair[i].second){
-//             std::swap(contPair[i].first, contPair[i].second);
-//         }
-//         smallest.push_back(contPair[i].second);
-//         largest.push_back(contPair[i].first);
-//     }
+		return seq;
+	}
 
-//     std::sort(smallest.begin(), smallest.end());
+	template < typename T >
+	void binaryInsert(T & arr, unsigned int val) {
+		int left = 0, right = arr.size();
 
-//     for (typename T::iterator it = largest.begin(); it != largest.end(); ++it){
-//         smallest.insert(std::lower_bound(smallest.begin(), smallest.end(), *it), *it);
-//     }
-//     for (size_t i = 0; i < smallest.size(); i++){
-//         container[i] = smallest[i];
-//     }
-//     if (straggler != -1)
-//         container.insert(std::lower_bound(container.begin(), container.end(), straggler), straggler);
-// }
-	
+		while (left < right) {
+			int mid = left + (right - left) / 2;
+
+			if (arr[mid] < val) {
+				left = mid + 1;
+			} else {
+				right = mid;
+			}
+		}
+		
+		arr.insert(arr.begin() + left, val);
+	}
+
+	template < typename T >
+	T mergeInsertSort(T arr) {
+    int n = arr.size();
+    
+    if (n <= 1) {
+        return arr;
+    }
+
+    T sortedArr;
+    sortedArr.push_back(arr[0]);
+
+    for (int i = 1; i < n; i++) {
+        binaryInsert(sortedArr, arr[i]);
+    }
+
+    return sortedArr;
+}
 	
 class NotANum : public std::exception
 	{
@@ -85,13 +96,10 @@ class NotPositivNum : public std::exception
 	};
 private:
        
-	std::deque<unsigned int> listContainer;
+	std::deque<unsigned int> DeqContainer;
     std::vector<unsigned int> vectorContainer;
 
 	int numberToSort;
-	int straggler;
-
-
 };
 
 #endif
