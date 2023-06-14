@@ -26,9 +26,9 @@ public:
 	void printWidth();
 
 template<typename T>
-void insertionSort(T& cont, size_t left, size_t rightIndex)
+void insertionSort(T& cont, size_t left, size_t right)
 {
-    for (size_t i = left; i < rightIndex; i++)
+    for (size_t i = left; i < right; i++)
     {
         typename T::value_type currentElement = cont[i + 1];
         size_t j = i + 1;
@@ -62,31 +62,21 @@ void merge(T& cont, size_t left, size_t mid, size_t right)
             mergedSegment[k++] = cont[j++];
         }
     }
-    
-    // Copy the remaining elements of the first part, if any
     while (i <= mid)
-    {
         mergedSegment[k++] = cont[i++];
-    }
-    
-    // Copy the remaining elements of the second part, if any
     while (j <= right)
-    {
         mergedSegment[k++] = cont[j++];
-    }
-    
-    // Copy the elements from the temporary container back to the original container
+
     for (i = left, k = 0; i <= right;)
-    {
         cont[i++] = mergedSegment[k++];
-    }
 }
 
 template<typename T>
 void recursiveContainer(T& cont, size_t leftRange, size_t rightRange) {
     size_t halfTotalSize = cont.size() / 2;
-    if (rightRange - leftRange <= halfTotalSize)
+    if (rightRange - leftRange <= halfTotalSize){
         insertionSort(cont, leftRange, rightRange);
+    }
     else {
         size_t midIndex = (leftRange + rightRange) / 2;
         recursiveContainer(cont, leftRange, midIndex);
